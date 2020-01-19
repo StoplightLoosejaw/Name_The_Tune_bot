@@ -152,10 +152,10 @@ def crossroads(message):
 def show_lb(message):
     bot.reply_to(message, db.get_leaderboard())
     if db.get_players_position(message.from_user.id) == 3:
-        bot.reply_to(message, 'Вы находитесь на {}-eм'.format(db.get_players_position(message.from_user.id)),
+        bot.reply_to(message, 'Вы находитесь на {}-eм месте'.format(db.get_players_position(message.from_user.id)),
                      reply_markup=croads_markup(message.from_user.id))
     else:
-        bot.reply_to(message, 'Вы находитесь на {}-ом'.format(db.get_players_position(message.from_user.id)),
+        bot.reply_to(message, 'Вы находитесь на {}-ом месте'.format(db.get_players_position(message.from_user.id)),
                      reply_markup=croads_markup(message.from_user.id))
     bot.register_next_step_handler(message, crossroads)
 
