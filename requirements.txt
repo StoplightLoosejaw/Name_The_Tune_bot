@@ -4,7 +4,7 @@ gunicorn==19.7.1
 idna==2.6
 psycopg2==2.8.4
 PySocks==1.6.8
-pyTelegramBotAPI==3.6.6
+PyTelegramBotAPI==2.2.3
 requests==2.18.4
 six==1.13.0
 telebot==0.0.3
