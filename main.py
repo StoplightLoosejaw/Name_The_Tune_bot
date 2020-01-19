@@ -11,10 +11,9 @@ bot = telebot.TeleBot(os.getenv("TOKEN"))
 db = TuneEngine()
 db.setup()
 
-genres_markup = types.InlineKeyboardMarkup()
 all_genres = [[types.InlineKeyboardButton(text='rap')], [types.InlineKeyboardButton(text='pop')], 
               [types.InlineKeyboardButton(text='русские треки')], [types.InlineKeyboardButton(text='easy pop')]]
-genres_markup.row(*all_genres)
+genres_markup = types.InlineKeyboardMarkup(all_genres)
 
 
 @bot.message_handler(commands=['start'])
@@ -61,7 +60,7 @@ def genre(message):
 
 
 def get_genre(message):
-    if message.text not in all_genres:
+    if message.text not in ['pop', 'easy pop', 'rap', 'русские треки']:
         bot.reply_to(message, 'Пожалуйста выберите один из вариков')
         bot.register_next_step_handler(message, get_genre)
     else:
