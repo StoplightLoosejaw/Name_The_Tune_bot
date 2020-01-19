@@ -12,7 +12,7 @@ db = TuneEngine()
 db.setup()
 
 genres_markup = types.InlineKeyboardMarkup(selective=True)
-all_genres = ['rap', 'pop', 'Русские треки', 'easy pop']
+all_genres = ['rap', 'pop', 'русские треки', 'easy pop']
 genres_markup.row(*all_genres)
 
 
