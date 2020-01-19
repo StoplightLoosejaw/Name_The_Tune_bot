@@ -11,7 +11,7 @@ bot = telebot.TeleBot(os.getenv("TOKEN"))
 db = TuneEngine()
 db.setup()
 
-genres_markup = types.InlineKeyboardMarkup(selective=True)
+genres_markup = types.InlineKeyboardMarkup()
 all_genres = ['rap', 'pop', 'русские треки', 'easy pop']
 genres_markup.row(*all_genres)
 
