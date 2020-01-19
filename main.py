@@ -6,7 +6,7 @@ from telebot import types
 import random
 
 #apihelper.proxy = {'https': 'socks5h://198.27.75.152:1080'}
-bot = os.getenv("TOKEN")
+bot = telebot.TeleBot(os.getenv("TOKEN"))
 
 db = TuneEngine()
 db.setup()
