@@ -108,8 +108,8 @@ class TuneEngine:
         stmt = '''SELECT ARTIST, LYRICS, T.TRACK FROM "LYRICS" L JOIN "TRACKS" T ON L.TRACK=T.TRACK
                 WHERE LOWER(GENRE) = '{}' ''' \
                '''ORDER BY RANDOM() LIMIT 1'''.format(gt_genre)
+        gt_short_lyrics = []
         while not gt_short_lyrics and len(gt_short_lyrics)<10:
-            gt_short_lyrics = []
             self.cursor.execute(stmt)
             select_res = self.cursor.fetchall()[0]
             gt_correct_artist = select_res[0]
