@@ -106,15 +106,15 @@ class TuneEngine:
 
     def get_track(self, gt_user_id, gt_genre):
         stmt = '''SELECT ARTIST, LYRICS, T.TRACK FROM "LYRICS" L JOIN "TRACKS" T ON L.TRACK=T.TRACK
-                WHERE GENRE = '{}' ''' \
+                WHERE LOWER(GENRE) = '{}' ''' \
                '''ORDER BY RANDOM() LIMIT 1'''.format(gt_genre)
         self.cursor.execute(stmt)
-        select_res = self.cursor.fetchall()[0]
-        gt_correct_artist = select_res[0]
-        gt_lyrics = select_res[1].split('\n\n')
-        gt_track = select_res[2]
-        gt_short_lyrics = []
-        while not gt_short_lyrics:
+        while not gt_short_lyrics and len(gt_short_lyrics)<10:
+            select_res = self.cursor.fetchall()[0]
+            gt_correct_artist = select_res[0]
+            gt_lyrics = select_res[1].split('\n\n')
+            gt_track = select_res[2]
+            gt_short_lyrics = []
             gt_rand = random.randint(0, len(gt_lyrics)-1)
             gt_short_lyrics = gt_lyrics[gt_rand]
         stmt = '''SELECT ARTIST FROM "LYRICS" L JOIN "TRACKS" T ON L.TRACK=T.TRACK WHERE GENRE = '{}' AND''' \
