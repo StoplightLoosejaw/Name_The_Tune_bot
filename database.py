@@ -131,7 +131,7 @@ class TuneEngine:
 
     def get_leaderboard(self):
         stmt = '''SELECT ROW_NUMBER() OVER (ORDER BY WINS DESC) AS I, '''\
-               '''USER_NAME, 'УГАДАННО '||WINS, 'НЕУГАДАННО '||LOSSES FROM ALL_USERS  ''' \
+               '''USER_NAME, 'УГАДАНО '||WINS, 'ОШИБОК '||LOSSES FROM ALL_USERS  ''' \
                ''' WHERE LEADERBOARD_FLG=1 ORDER BY WINS DESC LIMIT 10'''
         self.cursor.execute(stmt)
         leaderboard = self.cursor.fetchall()
