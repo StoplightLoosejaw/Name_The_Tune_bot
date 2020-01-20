@@ -109,7 +109,7 @@ class TuneEngine:
                 WHERE LOWER(GENRE) = '{}' ''' \
                '''ORDER BY RANDOM() LIMIT 1'''.format(gt_genre)
         gt_short_lyrics = []
-        while not gt_short_lyrics and len(gt_short_lyrics)<10:
+        while len(gt_short_lyrics)<20:
             self.cursor.execute(stmt)
             select_res = self.cursor.fetchall()[0]
             gt_correct_artist = select_res[0]
@@ -117,8 +117,10 @@ class TuneEngine:
             gt_track = select_res[2]
             gt_rand = random.randint(0, len(gt_lyrics)-1)
             gt_short_lyrics = gt_lyrics[gt_rand]
-        stmt = '''SELECT ARTIST FROM "LYRICS" L JOIN "TRACKS" T ON L.TRACK=T.TRACK WHERE LOWER(GENRE) = '{}' AND''' \
-               ''' ARTIST <> '{}' ORDER BY RANDOM() LIMIT 3'''.format(gt_genre, gt_correct_artist.replace("'", ''))
+            if gt_correct_artist in gt_short_lyrics:
+                gt_short_lyrics=[]
+        stmt = '''SELECT DISTINCT ARTIST FROM "LYRICS" L JOIN "TRACKS" T ON L.TRACK=T.TRACK WHERE LOWER(GENRE) = '{}' ''' \
+               '''AND ARTIST <> '{}' ORDER BY RANDOM() LIMIT 3'''.format(gt_genre, gt_correct_artist.replace("'", ''))
         self.cursor.execute(stmt)
         gt_incorrect_artists = self.cursor.fetchall()
         gt_incorrect_artists = gt_incorrect_artists[0][0] + ',' + gt_incorrect_artists[1][0] + ',' + \
