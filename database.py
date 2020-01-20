@@ -119,8 +119,9 @@ class TuneEngine:
             gt_short_lyrics = gt_lyrics[gt_rand]
             if gt_correct_artist in gt_short_lyrics:
                 gt_short_lyrics=[]
-        stmt = '''SELECT DISTINCT ARTIST FROM "LYRICS" L JOIN "TRACKS" T ON L.TRACK=T.TRACK WHERE LOWER(GENRE) = '{}' ''' \
-               '''AND ARTIST <> '{}' ORDER BY RANDOM() LIMIT 3'''.format(gt_genre, gt_correct_artist.replace("'", ''))
+        stmt = '''SELECT ARTIST FROM (SELECT DISTINCT ARTIST FROM "LYRICS" L JOIN "TRACKS" T '''\
+               '''ON L.TRACK=T.TRACK WHERE LOWER(GENRE) = '{}' ''' \
+               '''AND ARTIST <> '{}') A ORDER BY RANDOM() LIMIT 3'''.format(gt_genre, gt_correct_artist.replace("'", ''))
         self.cursor.execute(stmt)
         gt_incorrect_artists = self.cursor.fetchall()
         gt_incorrect_artists = gt_incorrect_artists[0][0] + ',' + gt_incorrect_artists[1][0] + ',' + \
