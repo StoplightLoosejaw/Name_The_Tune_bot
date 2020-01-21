@@ -130,9 +130,9 @@ class TuneEngine:
         return gt_short_lyrics
 
     def get_leaderboard(self):
-        stmt = '''SELECT ROW_NUMBER() OVER (ORDER BY WINS DESC) AS I, '''\
+        stmt = '''SELECT ROW_NUMBER() OVER (ORDER BY WINS DESC, LOSSES ASC) AS I, '''\
                '''USER_NAME, 'УГАДАНО '||WINS, 'ОШИБОК '||LOSSES FROM ALL_USERS  ''' \
-               ''' WHERE LEADERBOARD_FLG=1 ORDER BY WINS DESC LOSSES LIMIT 10'''
+               ''' WHERE LEADERBOARD_FLG=1 ORDER BY WINS DESC, LOSSES ASC LIMIT 10'''
         self.cursor.execute(stmt)
         leaderboard = self.cursor.fetchall()
         return "\n".join(" ".join(map(str, x)) for x in leaderboard)
