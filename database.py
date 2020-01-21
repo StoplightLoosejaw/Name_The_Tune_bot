@@ -83,7 +83,7 @@ class TuneEngine:
             return False
 
     def new_player(self, np_user_id):
-        self.add_row_all_users(np_user_id, 0, 0, 0, 1, 1, 3, 1)
+        self.add_row_all_users(np_user_id, 0, 0, 0, 0, 1, 3, 1)
         self.add_row_current_game(np_user_id, 0, 0, 0, 0, 0, 0)
 
     def new_game(self, ng_user_id, ng_decade, ng_genre, ng_lyrics, ng_correct_artist,  ng_correct_track,
@@ -132,7 +132,7 @@ class TuneEngine:
     def get_leaderboard(self):
         stmt = '''SELECT ROW_NUMBER() OVER (ORDER BY WINS DESC) AS I, '''\
                '''USER_NAME, 'УГАДАНО '||WINS, 'ОШИБОК '||LOSSES FROM ALL_USERS  ''' \
-               ''' WHERE LEADERBOARD_FLG=1 ORDER BY WINS DESC LIMIT 10'''
+               ''' WHERE LEADERBOARD_FLG=1 ORDER BY WINS DESC LOSSES LIMIT 10'''
         self.cursor.execute(stmt)
         leaderboard = self.cursor.fetchall()
         return "\n".join(" ".join(map(str, x)) for x in leaderboard)
