@@ -139,9 +139,9 @@ class TuneEngine:
 
     def get_players_position(self, gpp_user_id):
         stmt = '''SELECT I, USER_NAME, WINS, LOSSES FROM ( '''\
-         '''SELECT ROW_NUMBER() OVER (ORDER BY WINS DESC) AS I, '''\
+         '''SELECT ROW_NUMBER() OVER (ORDER BY WINS DESC, LOSSES ASC) AS I, '''\
          '''USER_NAME, USER_ID, WINS, LOSSES FROM ALL_USERS  ''' \
-         '''WHERE LEADERBOARD_FLG=1 ORDER BY WINS DESC) A  ''' \
+         '''WHERE LEADERBOARD_FLG=1 ORDER BY WINS DESC, LOSSES ASC) A  ''' \
          '''WHERE USER_ID='{}' '''.format(gpp_user_id)
         self.cursor.execute(stmt)
         players_pos = self.cursor.fetchone()
